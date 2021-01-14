@@ -43,8 +43,16 @@ namespace Project
             }
             catch (Exception)
             {
-                var rating = htmlDocument2.DocumentNode.Descendants("a").Where(node => node.GetAttributeValue("class", "").Equals("sell-color")).ToList();
-                return rating[0].InnerText;
+                try
+                {
+                    var rating = htmlDocument2.DocumentNode.Descendants("a").Where(node => node.GetAttributeValue("class", "").Equals("sell-color")).ToList();
+                    return rating[0].InnerText;
+                }
+                catch(Exception)
+                {
+                    var rating = htmlDocument2.DocumentNode.Descendants("a").Where(node => node.GetAttributeValue("class", "").Equals("hold-color")).ToList();
+                    return rating[0].InnerText;
+                }
             }
 
         }
