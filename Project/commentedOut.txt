@@ -1,0 +1,192 @@
+/*
+        void updateTable3(ref String name, ref string cost)
+        {
+        DateTime today = DateTime.Today;
+        SqlConnectionStringBuilder builder = call();
+        double cost2 = Convert.ToDouble(cost);
+        using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+        {
+            connection.Open();
+            {
+                String sql = "UPDATE StocksNow SET CurrentPrice = @CurrentPrice, Low = @Low, High = @High, @Date = Date WHERE Stock = @Stock";
+                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                {
+                    cmd.Parameters.AddWithValue("@CurrentPrice", cost);
+                    cmd.Parameters.AddWithValue("@Low", cost);
+                    cmd.Parameters.AddWithValue("@High", cost);
+                    cmd.Parameters.AddWithValue("@Stock", name);
+                    cmd.Parameters.AddWithValue("@Date", today);
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
+            
+        }
+        void updateTable4(ref String name)
+        {
+            StringBuilder URL = new StringBuilder();
+            URL.Append("https://finance.yahoo.com/quote/");
+            URL.Append(name);
+            WebClient client = new WebClient();
+            string content = client.DownloadString(URL.ToString());
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(content);
+            var price = htmlDocument.DocumentNode.Descendants("span").Where(node => node.GetAttributeValue("class", "").Equals("Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)")).ToList();
+            var findStockName = htmlDocument.DocumentNode.Descendants("h1").Where(node => node.GetAttributeValue("class", "").Equals("D(ib) Fz(18px)")).ToList();
+            if (price.Count > 0 && findStockName.Count > 0)
+            {
+                var price3 = price[0].InnerText;
+                var NameOfCom = findStockName[0].InnerText;
+                updateTable3(ref NameOfCom, ref price3);
+            }
+        }
+        void But2()
+        {
+            SqlConnectionStringBuilder builder = call();
+
+            String sb = "", ticker = "";
+            List<String> result = new List<String>();
+            int begin = 0, end = 0, pos = 0;
+            sb = "SELECT Stock FROM StocksNow";
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand(sb, connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result.Add(reader.GetString(0));
+                        }
+                        reader.Close();
+                    }
+                }
+                connection.Close();
+            }
+            foreach (String name in result)
+            {
+                begin = name.IndexOf("(") + 1;
+                pos = name.IndexOf(')');
+                end = pos - begin;
+                ticker = name.Substring(begin, end);
+                updateTable4(ref ticker);
+            }
+        }
+        */
+ /*
+        void updateStockToGlobal(String name, ref String ticker)
+        {
+            double curr, low, high, dblow, dbhi;
+            String val = BuyStat(ref ticker);
+            String sb = "SELECT CurrentPrice FROM StocksNow WHERE Stock = @Stock";
+            String sb2 = "SELECT Low FROM StocksNow WHERE Stock = @Stock";
+            String sb3 = "SELECT High FROM StocksNow WHERE Stock = @Stock";
+            String sb4 = "SELECT Low FROM Stocks_Today WHERE Stock = @Stock";
+            String sb5 = "SELECT High FROM Stocks_Today WHERE Stock = @Stock";
+            String sb6 = "UPDATE Stocks_Today SET Low = @Low WHERE Stock = @Stock";
+            String sb7 = "UPDATE Stocks_Today SET High = @High WHERE Stock = @Stock";
+            String sb8 = "UPDATE Stocks_Today SET Cost = @Cost WHERE Stock = @Stock";
+            String sb9 = "UPDATE Stocks_Today SET Rating = @Rating WHERE Stock = @Stock";
+            SqlConnectionStringBuilder builder = call();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                {
+                    using (SqlCommand cmd = new SqlCommand(sb, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Stock", name);
+                        curr = (double)cmd.ExecuteScalar();
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sb2, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Stock", name);
+                        low = (double)cmd.ExecuteScalar();
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sb3, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Stock", name);
+                        high = (double)cmd.ExecuteScalar();
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sb4, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Stock", name);
+                        dblow = (double)cmd.ExecuteScalar();
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sb5, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Stock", name);
+                        dbhi = (double)cmd.ExecuteScalar();
+                    }
+                    if (dblow > low)
+                    {
+                        using (SqlCommand cmd = new SqlCommand(sb6, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@Stock", name);
+                            cmd.Parameters.AddWithValue("@Low", low);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    if (dbhi < high)
+                    {
+                        using (SqlCommand cmd = new SqlCommand(sb7, connection))
+                        {
+                            cmd.Parameters.AddWithValue("@Stock", name);
+                            cmd.Parameters.AddWithValue("@High", high);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sb8, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Stock", name);
+                        cmd.Parameters.AddWithValue("@Cost", curr);
+                        cmd.ExecuteNonQuery();
+                    }
+                    using (SqlCommand cmd = new SqlCommand(sb9, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Stock", name);
+                        cmd.Parameters.AddWithValue("@Rating", val);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            SqlConnectionStringBuilder builder = call();
+
+            String sb = "";
+            List<String> result = new List<String>();
+            sb = "SELECT Stock FROM StocksNow";
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = new SqlCommand(sb, connection))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result.Add(reader.GetString(0));
+                        }
+                        reader.Close();
+                    }
+                }
+                connection.Close();
+            }
+            foreach (String name in result)
+            {
+                int begin = name.IndexOf("(") + 1;
+                int pos = name.IndexOf(')');
+               int  end = pos - begin;
+               String ticker = name.Substring(begin, end);
+                updateStockToGlobal(name, ref ticker);
+            }
+            But2();
+        }
+    }
+       
+        */
