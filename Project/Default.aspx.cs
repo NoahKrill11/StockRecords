@@ -213,9 +213,8 @@ namespace Project
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(content);
             var volume = htmlDocument.DocumentNode.Descendants("td").Where(node => node.GetAttributeValue("class", "").Equals("wsod_quoteDataPoint")).ToList();
-            String v = volume[3].InnerText;
-            Literal6.Text = StockSearch.Text + " has a volume today of " + v;
-            return v;
+            Literal6.Text = StockSearch.Text.ToUpper() + " has a volume today of " + volume[3].InnerText;
+            return volume[3].InnerText;
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -249,14 +248,8 @@ namespace Project
                     }
                 }
             }
-            
         }
-
-
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+       
         String BuyStat(ref String name)
         {
             StringBuilder URL = new StringBuilder();
