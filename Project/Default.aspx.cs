@@ -227,26 +227,39 @@ namespace Project
             string content = client.DownloadString(URL.ToString());
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(content);
-            var price = htmlDocument.DocumentNode.Descendants("span").Where(node => node.GetAttributeValue("class", "").Equals("Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)")).ToList();
-            var findStockName = htmlDocument.DocumentNode.Descendants("h1").Where(node => node.GetAttributeValue("class", "").Equals("D(ib) Fz(18px)")).ToList();
-            if (price.Count > 0 && findStockName.Count > 0)
+            try
             {
-                var price3 = price[0].InnerText;
-                var NameOfCom = findStockName[0].InnerText;
-                int count = CheckName(ref NameOfCom);
-                Literal1.Text = NameOfCom;
-                String daily = volume();
-                if (price3 != "")
+                var price = htmlDocument.DocumentNode.Descendants("span").Where(node => node.GetAttributeValue("class", "").Equals("Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)")).ToList();
+                var findStockName = htmlDocument.DocumentNode.Descendants("h1").Where(node => node.GetAttributeValue("class", "").Equals("D(ib) Fz(18px)")).ToList();
+                if (price.Count > 0 && findStockName.Count > 0)
                 {
-                    if (count == 0)
+                    var price3 = price[0].InnerText;
+                    var NameOfCom = findStockName[0].InnerText;
+                    int count = CheckName(ref NameOfCom);
+                    Literal1.Text = NameOfCom;
+                    String daily = volume();
+                    if (price3 != "")
                     {
-                        addNewStock(ref NameOfCom, ref price3, ref stockName, ref daily);
-                    }
-                    else
-                    {
-                        updateTable(ref NameOfCom, ref price3, ref stockName, ref daily);
+                        if (count == 0)
+                        {
+                            addNewStock(ref NameOfCom, ref price3, ref stockName, ref daily);
+                        }
+                        else
+                        {
+                            updateTable(ref NameOfCom, ref price3, ref stockName, ref daily);
+                        }
                     }
                 }
+            }
+            catch(Exception)
+            {
+                Literal1.Text = "";
+                Literal2.Text = stockName+ " is not a stock";
+                Literal3.Text = " ";
+                Literal4.Text = " ";
+                Literal5.Text = " ";
+                Literal6.Text = " ";
+                Literal7.Text = " ";
             }
         }
        
