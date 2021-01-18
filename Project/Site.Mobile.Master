@@ -3,6 +3,7 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
     <title></title>
@@ -11,6 +12,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
+        <link rel="shortcut icon" type="image/x-icon" href="~/SiteImg/money.svg" />
         <h1>Mobile Master Page</h1>
         <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
         <section class="content-wrapper main-content clear-fix">

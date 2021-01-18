@@ -50,10 +50,31 @@
     <Reference Include="HtmlAgilityPack, Version=1.11.29.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.29\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="IronPython, Version=2.7.11.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.11\lib\net45\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.11.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.11\lib\net45\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.SQLite, Version=2.7.11.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.11\lib\net45\IronPython.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Wpf, Version=2.7.11.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.11\lib\net45\IronPython.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="IronXL, Version=2020.12.2.0, Culture=neutral, PublicKeyToken=0f5804b6690bad1e, processorArchitecture=MSIL">
       <HintPath>..\packages\IronXL.Excel.2020.12.2\lib\net45\IronXL.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Dynamic, Version=1.3.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.3.0\lib\net45\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.3.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.3.0\lib\net45\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.3.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.3.0\lib\net45\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
     <Reference Include="ScrapySharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ScrapySharp.3.0.0\lib\netstandard2.0\ScrapySharp.dll</HintPath>
     </Reference>
@@ -227,6 +248,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="SiteImg\money.svg" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
